@@ -19,7 +19,7 @@ function App() {
       <Header/>
     </div>
     <div>
-      <MainComponent/>
+      <MainContent/>
     </div>
     <div>
       <Footer/>
