@@ -3,6 +3,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import WelcomeMessage from "./components/WelcomeMessage"
+import Header from './components/Header'
+import MainComponent from './components/MainContent'
+import Footer from './components/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +14,15 @@ function App() {
     <>
     <div>
       <WelcomeMessage />
+    </div>
+    <div>
+      <Header/>
+    </div>
+    <div>
+      <MainComponent/>
+    </div>
+    <div>
+      <Footer/>
     </div>
       <div>
         <a href="https://vite.dev" target="_blank">
