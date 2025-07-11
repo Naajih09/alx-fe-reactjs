@@ -15,7 +15,7 @@ function App() {
     <>
      <div>
       <h1>User Profile</h1>
-      <UserProfile name="Naajih Siraj" age="20" bio="A passionate software developer and graphic designer from Nigeria" />
+      <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
     </div>
     <div>
       <WelcomeMessage />
