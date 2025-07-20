@@ -1,4 +1,4 @@
-import { useState } from 'react'
+/*import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,7 +8,7 @@ import MainContent from './components/MainContent'
 import Footer from './components/Footer'
 import UserProfile from './components/UserProfile';
 
-function App() {
+function (App) {
   const [count, setCount] = useState(0)
 
   return (
@@ -45,10 +45,10 @@ function App() {
       </p>
     </>
   )
-}
+}*/
 
-import ProfilePage from './ProfilePage';
-import UserContext from './UserContext';
+import ProfilePage from './components/ProfilePage';
+import UserContext from './components/userContext';
 
 function App() {
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
