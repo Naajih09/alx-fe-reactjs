@@ -25,9 +25,26 @@ export const useRecipeStore = create((set, get) => ({
     set({ filteredRecipes: filtered });
   },
 
+  // ✅ Create new recipe
   addRecipe: (newRecipe) => {
     const { recipes } = get();
     set({ recipes: [...recipes, newRecipe] }, get().filterRecipes);
+  },
+
+  // ✅ Update existing recipe
+  updateRecipe: (updatedRecipe) => {
+    const { recipes } = get();
+    const updated = recipes.map((recipe) =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+    );
+    set({ recipes: updated }, get().filterRecipes);
+  },
+
+  // ✅ Delete a recipe by ID
+  deleteRecipe: (recipeId) => {
+    const { recipes } = get();
+    const filtered = recipes.filter((recipe) => recipe.id !== recipeId);
+    set({ recipes: filtered }, get().filterRecipes);
   },
 
   addFavorite: (recipeId) => {
