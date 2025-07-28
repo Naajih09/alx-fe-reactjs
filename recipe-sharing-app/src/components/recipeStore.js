@@ -25,6 +25,11 @@ export const useRecipeStore = create((set, get) => ({
     set({ filteredRecipes: filtered });
   },
 
+  addRecipe: (newRecipe) => {
+    const { recipes } = get();
+    set({ recipes: [...recipes, newRecipe] }, get().filterRecipes);
+  },
+
   addFavorite: (recipeId) => {
     const { favorites } = get();
     if (!favorites.includes(recipeId)) {
@@ -41,5 +46,7 @@ export const useRecipeStore = create((set, get) => ({
 
   generateRecommendations: () => {
     const { recipes, favorites } = get();
-  };
-    // Example logic: Recommend recipes not in favorites
+    const recommended = recipes.filter((recipe) => !favorites.includes(recipe.id));
+    set({ recommendations: recommended });
+  },
+}));
