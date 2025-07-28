@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import RecipeList from './components/RecipeList';
 import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
+import AddRecipeForm from './components/AddRecipeForm'
 
 const dummyRecipes = [
   { id: 1, title: 'Jollof Rice', description: 'Spicy West African rice dish.', ingredients: ['rice', 'tomato', 'pepper'], prepTime: 45 },
@@ -27,6 +28,7 @@ const App = () => {
       <RecipeList />
       <FavoritesList />
       <RecommendationsList />
+      <AddRecipeForm />
     </div>
   );
 };
