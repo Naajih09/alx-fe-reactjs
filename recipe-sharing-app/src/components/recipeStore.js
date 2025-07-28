@@ -19,7 +19,7 @@ export const useRecipeStore = create((set, get) => ({
 
   filterRecipes: () => {
     const { recipes, searchTerm } = get();
-    const filtered = recipes.filter(recipe =>
+    const filtered = recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     set({ filteredRecipes: filtered });
@@ -35,4 +35,11 @@ export const useRecipeStore = create((set, get) => ({
   removeFavorite: (recipeId) => {
     const { favorites } = get();
     set({
-      favorite
+      favorites: favorites.filter((id) => id !== recipeId),
+    }, get().generateRecommendations);
+  },
+
+  generateRecommendations: () => {
+    const { recipes, favorites } = get();
+  };
+    // Example logic: Recommend recipes not in favorites
