@@ -8,6 +8,10 @@ function Search() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const query = `${username ? `${username} in:login` : ""} ${
+  location ? `location:${location}` : ""
+} ${minRepos ? `repos:>=${minRepos}` : ""}`.trim();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
