@@ -2,9 +2,22 @@ import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
 
-// Advanced search for users
-export const searchUsers = async (query) => {
-  // query should include "location" or "repos" if specified
-  const response = await axios.get(`https://api.github.com/search/users?q=${query}`);
+// Advanced user search function with minRepos and location
+export const searchUsers = async ({ username, location, minRepos }) => {
+  let query = "";
+
+  if (username) {
+    query += `${username} in:login `;
+  }
+
+  if (location) {
+    query += `location:${location} `;
+  }
+
+  if (minRepos) {
+    query += `repos:>=${minRepos}`;
+  }
+
+  const response = await axios.get(`${BASE_URL}/search/users?q=${query.trim()}`);
   return response.data;
 };
