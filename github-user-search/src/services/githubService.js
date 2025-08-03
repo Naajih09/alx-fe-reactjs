@@ -1,23 +1,22 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.github.com";
+const BASE_URL = "https://api.github.com/search/users";
 
-// Advanced user search function with minRepos and location
 export const searchUsers = async ({ username, location, minRepos }) => {
   let query = "";
 
-  if (username) {
-    query += `${username} in:login `;
-  }
+  // Constructing the search query
+  if (username) query += `${username} in:login`;
+  if (location) query += ` location:${location}`;
+  if (minRepos) query += ` repos:>=${minRepos}`;
 
-  if (location) {
-    query += `location:${location} `;
-  }
+  const url = `${BASE_URL}?q=${encodeURIComponent(query)}`;
 
-  if (minRepos) {
-    query += `repos:>=${minRepos}`;
+  try {
+    const response = await axios.get(url);
+    return response.data; // GitHub returns { total_count, incomplete_results, items: [] }
+  } catch (error) {
+    console.error("GitHub API error:", error);
+    throw new Error("GitHub API search failed");
   }
-
-  const response = await axios.get(`${BASE_URL}/search/users?q=${query.trim()}`);
-  return response.data;
 };
