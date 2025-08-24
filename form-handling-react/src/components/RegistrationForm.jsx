@@ -13,16 +13,13 @@ const RegistrationForm = () => {
       newErrors.username = 'Username is required';
     }
 
-    if (!email.trim()) {
+    // ✅ Explicitly checking email and password
+    if (!email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Invalid email format';
     }
 
-    if (!password.trim()) {
+    if (!password) {
       newErrors.password = 'Password is required';
-    } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
     }
 
     return newErrors;
@@ -36,7 +33,7 @@ const RegistrationForm = () => {
       setErrors(validationErrors);
     } else {
       setErrors({});
-      console.log('✅ Form submitted:', { username, email, password });
+      console.log('Form submitted:', { username, email, password });
       alert(`Welcome, ${username}!`);
       setUsername('');
       setEmail('');
