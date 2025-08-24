@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import recipesData from '../data.json';
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(recipesData);
+    fetch("/data.json")
+      .then(res => res.json())
+      .then(data => setRecipes(data.recipes || []))
+      .catch(err => console.error("Failed to load recipes:", err));
   }, []);
 
   return (
     <div className="p-4 bg-gray-100">
+        
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Recipe Sharing Platform</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 bg-white p-6 rounded-lg shadow-lg">
         {recipes.map(recipe => (
