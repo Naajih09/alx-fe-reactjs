@@ -1,83 +1,147 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-  // State for each input field
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [errors, setErrors] = useState({});
 
-    // Basic validation
-    if (!username || !email || !password) {
-      setError('All fields are required.');
-      return;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
     }
 
-    // Clear error and proceed (e.g., send data to backend)
-    setError('');
-    console.log('Form submitted:', { username, email, password });
-    // Reset form
-    setUsername('');
-    setEmail('');
-    setPassword('');
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+      console.log('✅ Form submitted:', formData);
+      alert(`Welcome aboard, ${formData.username}!`);
+      setFormData({ username: '', email: '', password: '' });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={formStyle}>
-      <h2>User Registration</h2>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <form onSubmit={handleSubmit} style={formStyle} noValidate>
+      <h2 style={{ textAlign: 'center' }}>Register</h2>
 
       <div style={fieldStyle}>
-        <label>Username:</label>
+        <label htmlFor="username">Username</label>
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          id="username"
+          value={formData.username}
+          onChange={handleChange}
+          placeholder="e.g. naajih123"
+          style={inputStyle}
         />
+        {errors.username && <div style={errorStyle}>{errors.username}</div>}
       </div>
 
       <div style={fieldStyle}>
-        <label>Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          id="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="you@example.com"
+          style={inputStyle}
         />
+        {errors.email && <div style={errorStyle}>{errors.email}</div>}
       </div>
 
       <div style={fieldStyle}>
-        <label>Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          id="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Choose a strong password"
+          style={inputStyle}
         />
+        {errors.password && <div style={errorStyle}>{errors.password}</div>}
       </div>
 
-      <button type="submit">Register</button>
+      <button type="submit" style={buttonStyle}>Register</button>
     </form>
   );
 };
 
-// Simple inline styles
+// 🎨 Styles
 const formStyle = {
-  maxWidth: '400px',
-  margin: '0 auto',
-  padding: '20px',
-  border: '1px solid #ccc',
-  borderRadius: '8px',
-  backgroundColor: '#f9f9f9',
+  maxWidth: '420px',
+  margin: '2rem auto',
+  padding: '2rem',
+  borderRadius: '10px',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  backgroundColor: '#fff',
+  fontFamily: 'Arial, sans-serif',
 };
 
 const fieldStyle = {
-  marginBottom: '15px',
+  marginBottom: '1.2rem',
   display: 'flex',
   flexDirection: 'column',
+};
+
+const inputStyle = {
+  padding: '0.6rem',
+  fontSize: '1rem',
+  borderRadius: '5px',
+  border: '1px solid #ccc',
+};
+
+const errorStyle = {
+  color: '#d9534f',
+  fontSize: '0.85rem',
+  marginTop: '0.3rem',
+};
+
+const buttonStyle = {
+  padding: '0.8rem',
+  fontSize: '1rem',
+  backgroundColor: '#007bff',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
 };
 
 export default RegistrationForm;
