@@ -2,16 +2,11 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-// Validation schema
+// ✅ Yup validation schema using string().required()
 const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Please enter your username'),
-  email: Yup.string()
-    .email('Hmm... that doesn’t look like a valid email')
-    .required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Password should be at least 6 characters')
-    .required('Don’t forget your password'),
+  username: Yup.string().required('Username is required'),
+  email: Yup.string().required('Email is required').email('Invalid email format'),
+  password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
 });
 
 const FormikForm = () => {
@@ -22,8 +17,8 @@ const FormikForm = () => {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log('✅ Registration submitted:', values);
-    alert('Thanks for registering, ' + values.username + '!');
+    console.log('Form submitted:', values);
+    alert(`Welcome, ${values.username}!`);
     resetForm();
   };
 
@@ -36,7 +31,6 @@ const FormikForm = () => {
         onSubmit={handleSubmit}
       >
         <Form noValidate>
-          {/* Username */}
           <div style={fieldGroup}>
             <label htmlFor="username">Username</label>
             <Field
@@ -49,7 +43,6 @@ const FormikForm = () => {
             <ErrorMessage name="username" component="div" style={errorStyle} />
           </div>
 
-          {/* Email */}
           <div style={fieldGroup}>
             <label htmlFor="email">Email</label>
             <Field
@@ -62,7 +55,6 @@ const FormikForm = () => {
             <ErrorMessage name="email" component="div" style={errorStyle} />
           </div>
 
-          {/* Password */}
           <div style={fieldGroup}>
             <label htmlFor="password">Password</label>
             <Field
